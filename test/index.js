@@ -108,4 +108,14 @@ describe('Initialize wallet ', () => {
 
     })
 
+    it("Get fees with manual gasLimit", async () => {
+        const web3 = new Web3(TESTNET.URL);
+        const tx = {
+            gasLimit: 2100
+        }
+        const fees = await polygonKeyring.getFees(tx, web3)
+        console.log(" with manual gasLimit ", fees)
+
+    })
+
 })
