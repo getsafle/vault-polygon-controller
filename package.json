@@ -1,5 +1,5 @@
 {
-  "name": "@getsafle/polygon-wallet-controller",
+  "name": "@getsafle/vault-polygon-controller",
   "version": "1.0.0",
   "description": "",
   "engines": {
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/getsafle/polygon-wallet-controller.git"
+    "url": "git+https://github.com/getsafle/vault-polygon-controller.git"
   },
   "keywords": [
     "polygon",
@@ -22,9 +22,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/getsafle/polygon-wallet-controller/issues"
+    "url": "https://github.com/getsafle/vault-polygon-controller/issues"
   },
-  "homepage": "https://github.com/getsafle/polygon-wallet-controller#readme",
+  "homepage": "https://github.com/getsafle/vault-polygon-controller#readme",
   "devDependencies": {
     "@metamask/eslint-config": "^4.0.0",
     "eslint": "^7.7.0",
