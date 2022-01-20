@@ -37,6 +37,7 @@ class KeyringController extends EventEmitter {
         this.encryptor = opts.encryptor || encryptor
         this.keyrings = []
         this.getNetwork = opts.getNetwork
+        this.importedWallets = []
     }
 
     /**
@@ -222,6 +223,20 @@ class KeyringController extends EventEmitter {
                 .then((keyring) => {
                     return keyring.exportAccount(normalizeAddress(address))
                 })
+        } catch (e) {
+            return Promise.reject(e)
+        }
+    }
+
+    importWallet(_privateKey) {
+        try {
+            const privateKey = ethUtil.toBuffer(_privateKey)
+            if (!ethUtil.isValidPrivate(privateKey))
+                throw "Enter a valid private key"
+
+            const address = ethUtil.bufferToHex(ethUtil.privateToAddress(privateKey))
+            this.importedWallets.push(address);
+            return address
         } catch (e) {
             return Promise.reject(e)
         }
