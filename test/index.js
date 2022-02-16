@@ -2,7 +2,7 @@ var assert = require('assert');
 const Web3 = require('web3')
 const bridgeContract = require('./contract-json/BridgePolygon.json');
 const CryptoJS = require('crypto-js');
-const PolygonKeyring = require('../src/index')
+const { KeyringController: PolygonKeyring, getBalance } = require('../src/index')
 const {
     HD_WALLET_12_MNEMONIC,
     HD_WALLET_12_MNEMONIC_TEST_OTHER,
@@ -127,6 +127,13 @@ describe('Initialize wallet ', () => {
         const address = await polygonKeyring.importWallet(EXTERNAL_ACCOUNT_PRIVATE_KEY)
         assert(address.toLowerCase() === EXTERNAL_ACCOUNT_ADDRESS.toLowerCase(), "Wrong address")
         assert(polygonKeyring.importedWallets.length === 1, "Should have 1 imported wallet")
+    })
+
+    it("Get address balance", async () => {
+        const accounts = await polygonKeyring.getAccounts()
+        const web3 = new Web3(TESTNET.URL);
+        const balance = await getBalance(accounts[0], web3)
+        console.log(" get balance ", balance, accounts)
     })
 
 })

@@ -64,5 +64,11 @@ const signedMsg = await polygonController.signMessage(msgParams);
 ### Sign Typed Data (EIP-712)
 
 ```
-const signedData = await polygonController.signTypedMessage (msgParams);
+const signedData = await polygonController.signTypedMessage(msgParams);
+```
+
+### Get balance
+
+```
+const balance = await getBalance(address, web3);
 ```
