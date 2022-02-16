@@ -10,7 +10,7 @@
 
 - Added importWallet() to import account using privateKey.
 
-### 1.0.2 (2022-02-16)
+### 1.1.0 (2022-02-16)
 
 ##### Implement get balance functionality
 

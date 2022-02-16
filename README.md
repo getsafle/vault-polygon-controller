@@ -7,9 +7,9 @@
 ## Initialize the Polygon Controller class
 
 ```
-const controller = require('@getsafle/vault-polygon-controller');
+const { KeyringController, getBalance } = require('@getsafle/vault-polygon-controller');
 
-const polygonController = new controller({
+const polygonController = new KeyringController({
   encryptor: {
     // An optional object for defining encryption schemes:
     // Defaults to Browser-native SubtleCrypto.
