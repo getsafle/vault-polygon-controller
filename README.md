@@ -7,9 +7,9 @@
 ## Initialize the Polygon Controller class
 
 ```
-const controller = require('@getsafle/vault-polygon-controller');
+const { KeyringController, getBalance } = require('@getsafle/vault-polygon-controller');
 
-const polygonController = new controller({
+const polygonController = new KeyringController({
   encryptor: {
     // An optional object for defining encryption schemes:
     // Defaults to Browser-native SubtleCrypto.
@@ -64,5 +64,11 @@ const signedMsg = await polygonController.signMessage(msgParams);
 ### Sign Typed Data (EIP-712)
 
 ```
-const signedData = await polygonController.signTypedMessage (msgParams);
+const signedData = await polygonController.signTypedMessage(msgParams);
+```
+
+### Get balance
+
+```
+const balance = await getBalance(address, web3);
 ```
