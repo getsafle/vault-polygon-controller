@@ -246,6 +246,8 @@ class KeyringController extends EventEmitter {
     // SIGNING METHODS
     //
 
+
+
     /**
      * Sign Polygon Transaction
      *
@@ -266,6 +268,25 @@ class KeyringController extends EventEmitter {
         const signedTx = `0x${tx.serialize().toString('hex')}`;
 
         return signedTx;
+    }
+
+    /**
+     * Sign Transaction or Message to get v,r,s
+     *
+     * Signs a transaction object.
+     *
+     * @param {Object} rawTx - The transaction or message to sign.
+     * @param {Object} privateKey - The private key of the account.
+     * @param {Object} web3 - web3 object.
+     * @returns {Object} The signed transaction object.
+     */
+    async sign(rawTx, privateKey, web3) {
+        let signedTx;
+        if (typeof rawTx === 'string')
+            signedTx = await web3.eth.accounts.sign(rawTx, privateKey);
+        else
+            signedTx = await web3.eth.accounts.signTransaction({ ...rawTx, gas: await web3.eth.estimateGas(rawTx) }, privateKey)
+        return signedTx
     }
 
     /**
