@@ -111,6 +111,13 @@ describe('Initialize wallet ', () => {
         const fees = await polygonKeyring.getFees(tx, web3)
         console.log("fees ", fees)
 
+        const privateKey = await polygonKeyring.exportAccount(accounts[0])
+        const tx2 = await polygonKeyring.sign(tx, privateKey, web3)
+        console.log("tx2 ", tx2)
+        const tx3 = await polygonKeyring.sign(TESTING_MESSAGE_1, privateKey, web3)
+        console.log("tx3 ", tx3)
+
+
     })
 
     it("Get fees with manual gasLimit", async () => {

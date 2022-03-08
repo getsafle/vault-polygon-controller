@@ -61,6 +61,12 @@ const signedTx = await polygonController.signTransaction(polygonTx, _fromAddress
 const signedMsg = await polygonController.signMessage(msgParams);
 ```
 
+### Sign a message
+
+```
+const signedObj = await polygonController.sign(msgParams, pvtKey, web3Obj);
+```
+
 ### Sign Typed Data (EIP-712)
 
 ```
