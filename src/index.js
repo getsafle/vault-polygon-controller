@@ -520,13 +520,13 @@ class KeyringController extends EventEmitter {
     async getFees(rawTx, web3) {
         const { from, to, value, data, gasLimit, maxFeePerGas } = rawTx
         const estimate = gasLimit ? gasLimit : await web3.eth.estimateGas({ to, from, value, data });
-    
+
         const re = /[0-9A-Fa-f]{6}/g;
-    
-        const maxFee = (re.test(maxFeePerGas)) ? parseInt(maxFeePerGas, 16) : maxFeePerGas;
-    
+
+        const maxFee = maxFeePerGas ? (re.test(maxFeePerGas)) ? parseInt(maxFeePerGas, 16) : maxFeePerGas : 0;
+
         const gas = (re.test(estimate)) ? parseInt(estimate, 16) : estimate
-        
+
         return { transactionFees: web3.utils.fromWei((gas * maxFee).toString(), 'ether') }
     }
 }
