@@ -523,7 +523,7 @@ class KeyringController extends EventEmitter {
 
         const re = /[0-9A-Fa-f]{6}/g;
 
-        const maxFee = maxFeePerGas ? (re.test(maxFeePerGas)) ? parseInt(maxFeePerGas, 16) : maxFeePerGas : await web3.eth.getGasPrice();
+        const maxFee = (re.test(maxFeePerGas)) ? parseInt(maxFeePerGas, 16) : maxFeePerGas;
 
         const gas = (re.test(estimate)) ? parseInt(estimate, 16) : estimate
 
