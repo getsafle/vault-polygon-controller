@@ -105,7 +105,9 @@ describe('Initialize wallet ', () => {
             from: accounts[0],
             to: POLYGON_CONTRACT,
             value: POLYGON_AMOUNT_TO_CONTRACT,
-            data
+            data,
+            maxFeePerGas: 2500000002,
+            maxPriorityFeePerGas: 2500000000
         }
 
         const fees = await polygonKeyring.getFees(tx, web3)
@@ -123,7 +125,9 @@ describe('Initialize wallet ', () => {
     it("Get fees with manual gasLimit", async () => {
         const web3 = new Web3(TESTNET.URL);
         const tx = {
-            gasLimit: 2100
+            gasLimit: 2100,
+            maxFeePerGas: 2500000002,
+            maxPriorityFeePerGas: 2500000000
         }
         const fees = await polygonKeyring.getFees(tx, web3)
         console.log(" with manual gasLimit ", fees)

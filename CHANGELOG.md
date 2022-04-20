@@ -21,3 +21,9 @@
 ##### Implement sign functionality
 
 - Added sign() to sign a message or transaction and get signature along with v,r,s.
+
+### 1.2.1 (2022-04-13)
+
+##### Updated getFees()
+
+- Updated getFees() function to calculate the transaction fees using `maxFeePerGas` since polygon supports type 2 transactions.
