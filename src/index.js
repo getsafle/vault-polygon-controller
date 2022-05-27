@@ -248,24 +248,6 @@ class KeyringController extends EventEmitter {
     //
 
     /**
-   * Sign Polygon Transaction
-   *
-   * Signs an Polygon transaction object.
-   *
-   * @param {Object} polygonTx - The transaction to sign.
-   * @param {string} _fromAddress - The transaction 'from' address.
-   * @param {Object} opts - Signing options.
-   * @returns {Promise<Object>} The signed transactio object.
-   */
-    signTransaction(polygonTx, _fromAddress, opts = {}) {
-        const fromAddress = normalizeAddress(_fromAddress)
-        return this.getKeyringForAccount(fromAddress)
-            .then((keyring) => {
-                return keyring.signTransaction(fromAddress, polygonTx, opts)
-            })
-    }
-
-    /**
      * Sign Message
      *
      * Attempts to sign the provided message parameters.
