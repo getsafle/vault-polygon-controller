@@ -170,7 +170,8 @@ describe('Initialize wallet ', () => {
             chainId: 80001,
         };
 
-        const signedTX = await polygonKeyring.signTransaction(rawTx, web3)
+        const privateKey = await polygonKeyring.exportAccount(accounts[0])
+        const signedTX = await polygonKeyring.signTransaction(rawTx, privateKey)
         console.log("signedTX ", signedTX)
 
         // const sentTX = await polygonKeyring.sendTransaction(signedTX, web3)
