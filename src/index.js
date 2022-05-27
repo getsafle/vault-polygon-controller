@@ -2,7 +2,8 @@
 const { EventEmitter } = require('events')
 const log = require('loglevel')
 const ethUtil = require('ethereumjs-util')
-const Tx = require('ethereumjs-tx');
+const { FeeMarketEIP1559Transaction } = require('@ethereumjs/tx');
+const { bufferToHex } = require('ethereumjs-util')
 
 const bip39 = require('bip39')
 const ObservableStore = require('obs-store')
@@ -246,47 +247,22 @@ class KeyringController extends EventEmitter {
     // SIGNING METHODS
     //
 
-
-
     /**
-     * Sign Polygon Transaction
-     *
-     * Signs an Polygon transaction object.
-     *
-     * @param {Object} polygonTx - The transaction to sign.
-     * @param {Object} web3 - web3 object.
-     * @returns {string} The signed transaction raw string.
-     */
-
-    async signTransaction(polygonTx, privateKey) {
-        const tx = new Tx(polygonTx);
-
-        const pkey = Buffer.from(privateKey, 'hex');
-
-        tx.sign(pkey);
-
-        const signedTx = `0x${tx.serialize().toString('hex')}`;
-
-        return signedTx;
-    }
-
-    /**
-     * Sign Transaction or Message to get v,r,s
-     *
-     * Signs a transaction object.
-     *
-     * @param {Object} rawTx - The transaction or message to sign.
-     * @param {Object} privateKey - The private key of the account.
-     * @param {Object} web3 - web3 object.
-     * @returns {Object} The signed transaction object.
-     */
-    async sign(rawTx, privateKey, web3) {
-        let signedTx;
-        if (typeof rawTx === 'string')
-            signedTx = await web3.eth.accounts.sign(rawTx, privateKey);
-        else
-            signedTx = await web3.eth.accounts.signTransaction({ ...rawTx, gas: await web3.eth.estimateGas(rawTx) }, privateKey)
-        return signedTx
+   * Sign Polygon Transaction
+   *
+   * Signs an Polygon transaction object.
+   *
+   * @param {Object} polygonTx - The transaction to sign.
+   * @param {string} _fromAddress - The transaction 'from' address.
+   * @param {Object} opts - Signing options.
+   * @returns {Promise<Object>} The signed transactio object.
+   */
+    signTransaction(polygonTx, _fromAddress, opts = {}) {
+        const fromAddress = normalizeAddress(_fromAddress)
+        return this.getKeyringForAccount(fromAddress)
+            .then((keyring) => {
+                return keyring.signTransaction(fromAddress, polygonTx, opts)
+            })
     }
 
     /**
@@ -423,6 +399,43 @@ class KeyringController extends EventEmitter {
                 }, [])
             })
         return addrs.map(normalizeAddress)
+    }
+
+    async signTransaction(rawTx, web3) {
+        let chain;
+
+        await web3.eth.getChainId().then((e) => chain = e);
+
+        const privateKey = await this.exportAccount(rawTx.from);
+
+        const pkey = Buffer.from(privateKey, 'hex');
+
+        const tx = FeeMarketEIP1559Transaction.fromTxData(rawTx);
+
+        const signedTransaction = tx.sign(pkey);
+
+        const signedTx = bufferToHex(signedTransaction.serialize());
+
+        return signedTx
+    }
+
+    /**
+    * Sign Transaction or Message to get v,r,s
+    *
+    * Signs a transaction object.
+    *
+    * @param {Object} rawTx - The transaction or message to sign.
+    * @param {Object} privateKey - The private key of the account.
+    * @param {Object} web3 - web3 object.
+    * @returns {Object} The signed transaction object.
+    */
+    async sign(rawTx, privateKey, web3) {
+        let signedTx;
+        if (typeof rawTx === 'string')
+            signedTx = await web3.eth.accounts.sign(rawTx, privateKey);
+        else
+            signedTx = await web3.eth.accounts.signTransaction({ ...rawTx, gas: await web3.eth.estimateGas(rawTx) }, privateKey)
+        return signedTx
     }
 
     /**

@@ -147,4 +147,34 @@ describe('Initialize wallet ', () => {
         console.log(" get balance ", balance, accounts)
     })
 
+    it("sign Transaction ", async () => {
+
+        const accounts = await polygonKeyring.getAccounts()
+        const from = accounts[0]
+        const web3 = new Web3(TESTNET.URL);
+
+        const count = await web3.eth.getTransactionCount(from);
+
+        const defaultNonce = await web3.utils.toHex(count);
+
+        const rawTx = {
+            to: '0xca878f65d50caf80a84fb24e40f56ef05483e1cb',
+            from,
+            value: web3.utils.numberToHex(web3.utils.toWei('0.01', 'ether')),
+            gasLimit: web3.utils.numberToHex(25000),
+            maxPriorityFeePerGas: web3.utils.numberToHex(web3.utils.toWei('55', 'gwei')),
+            maxFeePerGas: web3.utils.numberToHex(web3.utils.toWei('56', 'gwei')),
+            nonce: defaultNonce,
+            data: '0x00',
+            type: '0x2',
+            chainId: 80001,
+        };
+
+        const signedTX = await polygonKeyring.signTransaction(rawTx, web3)
+        console.log("signedTX ", signedTX)
+
+        // const sentTX = await polygonKeyring.sendTransaction(signedTX, web3)
+        // console.log("sentTX ", sentTX)
+    })
+
 })
