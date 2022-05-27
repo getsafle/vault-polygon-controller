@@ -27,3 +27,9 @@
 ##### Updated getFees()
 
 - Updated getFees() function to calculate the transaction fees using `maxFeePerGas` since polygon supports type 2 transactions.
+
+### 1.2.2 (2022-05-27)
+
+##### update signTransaction()
+
+- Updated signTransaction() function to support EIP-1559 transactions.

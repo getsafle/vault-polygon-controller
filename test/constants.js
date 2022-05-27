@@ -30,12 +30,12 @@ module.exports = {
         MAINNET: {
             NETWORK: "MAINNET",
             CHAIN_ID: 137,
-            URL: 'https://rpc-mainnet.matic.network'
+            URL: 'https://matic-mainnet.chainstacklabs.com'
         },
         TESTNET: {
             NETWORK: "TESTNET",
             CHAIN_ID: 80001,
-            URL: 'https://rpc-mumbai.maticvigil.com'
+            URL: 'https://matic-mumbai.chainstacklabs.com'
         }
     }
 }
