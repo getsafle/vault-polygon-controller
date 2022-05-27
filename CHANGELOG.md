@@ -33,3 +33,9 @@
 ##### update signTransaction()
 
 - Updated signTransaction() function to support EIP-1559 transactions.
+
+### 1.2.3 (2022-05-27)
+
+##### Updated signTransaction()
+
+- Removed unused code in signTransaction() and refactored the function.
