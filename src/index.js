@@ -383,13 +383,7 @@ class KeyringController extends EventEmitter {
         return addrs.map(normalizeAddress)
     }
 
-    async signTransaction(rawTx, web3) {
-        let chain;
-
-        await web3.eth.getChainId().then((e) => chain = e);
-
-        const privateKey = await this.exportAccount(rawTx.from);
-
+    async signTransaction(rawTx, privateKey) {
         const pkey = Buffer.from(privateKey, 'hex');
 
         const tx = FeeMarketEIP1559Transaction.fromTxData(rawTx);
