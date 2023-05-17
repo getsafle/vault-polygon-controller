@@ -1,6 +1,6 @@
 {
   "name": "@getsafle/vault-polygon-controller",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "",
   "engines": {
     "node": ">= 10"
@@ -20,7 +20,7 @@
     "keyring"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/getsafle/vault-polygon-controller/issues"
   },

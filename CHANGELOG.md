@@ -39,3 +39,7 @@
 ##### Updated signTransaction()
 
 - Removed unused code in signTransaction() and refactored the function.
+
+### 1.2.4 (2023-05-17)
+
+- Update importWallet method
