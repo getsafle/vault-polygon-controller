@@ -43,3 +43,7 @@
 ### 1.2.4 (2023-05-17)
 
 - Update importWallet method
+
+### 1.2.5 (2023-06-21)
+
+- update import wallet to accept private key with or without '0x’ prefixed

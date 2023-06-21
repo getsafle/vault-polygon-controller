@@ -1,6 +1,6 @@
 {
   "name": "@getsafle/vault-polygon-controller",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "",
   "engines": {
     "node": ">= 10"
