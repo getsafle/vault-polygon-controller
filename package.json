@@ -1,6 +1,6 @@
 {
   "name": "@getsafle/vault-polygon-controller",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "",
   "engines": {
     "node": ">= 10"
@@ -9,7 +9,15 @@
   "scripts": {
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint --fix . --ext .js",
-    "test": "mocha --timeout 150000"
+    "test": "mocha \"test/**.js\" --timeout 15000",
+    "test:coverage": "npm run cover:unit && npm run cover:report",
+    "test:coveragehtml": "npm run cover:unit && npm run cover:reporthtml",
+    "cover:unit": "nyc --silent npm run test",
+    "cover:report": "nyc report --reporter=lcov --reporter=text --report-dir='./jscoverage'",
+    "cover:reporthtml": "nyc report --reporter=html --report-dir='./jscoverage'"
+  },
+  "nyc": {
+    "exclude": ["test/**.js"]
   },
   "repository": {
     "type": "git",
@@ -31,7 +39,8 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-node": "^11.1.0",
-    "mocha": "^8.1.3"
+    "mocha": "^8.1.3",
+    "nyc": "^15.0.0"
   },
   "dependencies": {
     "@ethereumjs/common": "^2.6.0",
