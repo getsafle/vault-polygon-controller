@@ -51,3 +51,11 @@
 ### 1.2.6 (2023-07-05)
 
 - Adding badges for readme.md
+
+### 1.2.7 (2023-07-05)
+
+- Updated CI for test cases
+- Added coverage report for the test cases
+- Added nyc dependency for the coverage report
+- Updated node version
+- Added dev and test branches in CI
