@@ -14,6 +14,7 @@ const {
     EXTERNAL_ACCOUNT_WRONG_PRIVATE_KEY_1,
     EXTERNAL_ACCOUNT_WRONG_PRIVATE_KEY_2,
     EXTERNAL_ACCOUNT_WRONG_PRIVATE_KEY_3,
+    EXTERNAL_ACCOUNT_ADDRESS_TO_GET_FEE,
     POLYGON_NETWORK: {
         TESTNET,
         MAINNET
@@ -102,37 +103,17 @@ describe('Initialize wallet ', () => {
         const data = txData.encodeABI();
 
         const tx = {
-            from: accounts[0],
+            from: EXTERNAL_ACCOUNT_ADDRESS_TO_GET_FEE,
             to: POLYGON_CONTRACT,
             value: POLYGON_AMOUNT_TO_CONTRACT,
             data,
-            maxFeePerGas: 2500000002,
-            maxPriorityFeePerGas: 2500000000
+            chainID: 80001
         }
 
         const fees = await polygonKeyring.getFees(tx, web3)
         console.log("fees ", fees)
-
-        const privateKey = await polygonKeyring.exportAccount(accounts[0])
-        const tx2 = await polygonKeyring.sign(tx, privateKey, web3)
-        console.log("tx2 ", tx2)
-        const tx3 = await polygonKeyring.sign(TESTING_MESSAGE_1, privateKey, web3)
-        console.log("tx3 ", tx3)
-
-
     })
 
-    it("Get fees with manual gasLimit", async () => {
-        const web3 = new Web3(TESTNET.URL);
-        const tx = {
-            gasLimit: 2100,
-            maxFeePerGas: 2500000002,
-            maxPriorityFeePerGas: 2500000000
-        }
-        const fees = await polygonKeyring.getFees(tx, web3)
-        console.log(" with manual gasLimit ", fees)
-
-    })
 
     it("Should import correct account ", async () => {
         const address = await polygonKeyring.importWallet(EXTERNAL_ACCOUNT_PRIVATE_KEY)

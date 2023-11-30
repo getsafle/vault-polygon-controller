@@ -59,3 +59,7 @@
 - Added nyc dependency for the coverage report
 - Updated node version
 - Added dev and test branches in CI
+
+### 1.2.8 (2023-11-30)
+
+- Added gas limit and gas estimation in getFees()
