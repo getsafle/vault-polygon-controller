@@ -37,7 +37,7 @@ module.exports = {
         TESTNET: {
             NETWORK: "TESTNET",
             CHAIN_ID: 80001,
-            URL: 'https://polygon-mumbai.infura.io/v3/'
+            URL: 'wss://polygon-mumbai-bor.publicnode.com'
         }
     }
 }
