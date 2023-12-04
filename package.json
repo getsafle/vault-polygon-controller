@@ -1,6 +1,6 @@
 {
   "name": "@getsafle/vault-polygon-controller",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "",
   "engines": {
     "node": ">= 10"
@@ -17,7 +17,9 @@
     "cover:reporthtml": "nyc report --reporter=html --report-dir='./jscoverage'"
   },
   "nyc": {
-    "exclude": ["test/**.js"]
+    "exclude": [
+      "test/**.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -45,6 +47,7 @@
   "dependencies": {
     "@ethereumjs/common": "^2.6.0",
     "@ethereumjs/tx": "^3.4.0",
+    "axios": "^1.6.2",
     "bip39": "^3.0.4",
     "browser-passworder": "^2.0.3",
     "crypto-js": "^4.1.1",

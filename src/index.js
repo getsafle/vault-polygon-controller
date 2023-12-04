@@ -12,6 +12,8 @@ const { normalize: normalizeAddress } = require('eth-sig-util')
 
 const SimpleKeyring = require('eth-simple-keyring')
 const HdKeyring = require('eth-hd-keyring')
+const axios = require("axios");
+const { GAS_FEE_API } = require('./constants/index')
 
 const keyringTypes = [
     SimpleKeyring,
@@ -511,18 +513,52 @@ class KeyringController extends EventEmitter {
         return { transactionDetails: receipt.transactionHash }
     }
 
-    async getFees(rawTx, web3) {
-        const { from, to, value, data, gasLimit, maxFeePerGas } = rawTx
-        const estimate = gasLimit ? gasLimit : await web3.eth.estimateGas({ to, from, value, data });
+      /**
+   * get Fees method to get the fees for reqiured chainId for avalanche
+   *
+   * returns the object having gasLimit and fees for the block
+   *
+   * @param {Object} rawTx - Rawtransaction - {from,to,value,data, chainId}  
+   * @param {Object} web3 - web3 object.
+   * @returns {Object} - gasLimit for the transaction and fees for the transaction
+   */
+  async getFees(rawTx, web3) {
+    const { from, to, value, data, chainId } = rawTx
+    const gasLimit = await web3.eth.estimateGas({ to, from, value, data });
 
-        const re = /[0-9A-Fa-f]{6}/g;
+    let URL = GAS_FEE_API
 
-        const maxFee = (re.test(maxFeePerGas)) ? parseInt(maxFeePerGas, 16) : maxFeePerGas;
+    const response = await axios({
+      url : `${URL}`,
+      method: 'GET',
+    });
 
-        const gas = (re.test(estimate)) ? parseInt(estimate, 16) : estimate
 
-        return { transactionFees: web3.utils.fromWei((gas * maxFee).toString(), 'ether') }
+    let fees = {
+      "slow" : {
+        "maxPriorityFeePerGas" : parseInt(response.data.safeLow.maxPriorityFee * Math.pow(10, 9)),
+        "maxFeePerGas" : parseInt(response.data.safeLow.maxFee * Math.pow(10, 9)),
+
+      },
+      "standard" : {
+        "maxPriorityFeePerGas" : parseInt(response.data.standard.maxPriorityFee * Math.pow(10, 9)),
+        "maxFeePerGas" : parseInt(response.data.standard.maxFee * Math.pow(10, 9)),
+
+      },
+      "fast" : {
+        "maxPriorityFeePerGas" : parseInt(response.data.fast.maxPriorityFee * Math.pow(10, 9)),
+        "maxFeePerGas" : parseInt(response.data.fast.maxFee * Math.pow(10, 9)),
+
+      },
+      "baseFee" : parseInt(response.data.estimatedBaseFee * Math.pow(10, 9)),
+    };
+
+    return { 
+      gasLimit: gasLimit,
+      fees: fees
     }
+  }
+
 }
 
 const getBalance = async (address, web3) => {
